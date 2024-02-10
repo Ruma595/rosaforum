@@ -236,3 +236,55 @@ body {
     bottom: 0;
     right: 0;
 }
+
+.signin-form {
+    font-family: "Montserrat";
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    height: 100%;
+    background-color: white;
+    border-radius: 2px;
+    padding: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 125px;
+}
+
+#username, #password {
+    width: 60%;
+    outline: none;
+    border:none;
+    border-bottom: 2px solid rgb(24, 24, 24);
+    padding:5px;
+    font-family: "Montserrat";
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+#username:required:invalid, #password:required:invalid {
+    border-color: red;
+}
+
+.password, .username {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+#submit {
+    background:none;
+    border:none;
+    width: 30%;
+    background-color: #9EACDF;
+    color:#110151;
+    padding: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    margin: 15px 0 5px 0;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    border-radius: 3px;
+}
