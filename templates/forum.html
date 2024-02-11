@@ -6,17 +6,19 @@
     <link rel="stylesheet" href="../static/style.css">
     <title>Rosa Forum</title>
 </head>
-<body>
+<body class="diff">
     
     <section class="main-part">
         <div class="est-setting">
             <div class="userProfile">
-                <img src="" alt="" class="auth-avatar">
-                <p class="auth-name">{{session["user"][1]}}</p>
+                <img src="../static/img/near-tibet.png" alt="" class="useravatar">
+                <p class="username">{{session["user"][1]}}</p>
             </div>
-            <div class="profil-barre"></div>
-            <a href="" class="main-forum-page">Accueil</a>
-            <a href="" class="forum-navigation">Naviguez</a>
+            <div class="navigation-menu">
+                <a href="" class="main-forum-page">Accueil</a>
+                <a href="" class="forum-navigation">Naviguez</a>
+            
+            </div>
             <div class="bottom_title">
                 <h1 class="est-title">RosaForum*</h1>
                 <p class="est-title-info">*Non affilié au Lycée Rosa Parks</p>
@@ -24,11 +26,72 @@
         </div>
 
         <div class="middle-suggest">
+            
+            <div class="user-interaction">
+                <div class="userprofil">
+                    <img src="" alt="" class="useravatar">
+                </div>
+                <form action="{{url_for('send')}}" class="send-post">
+                    <textarea id="post-input" name="messagecontent" placeholder="Quelque chose a nous dire ?" required maxlength="390" minlength="5" cols="30" rows="5"></textarea>
+                    <input type="submit" value="Post" id="postit">
+                </form>
+            </div>
+
+            <div class="messages-bloc">
+                {%for message in messages%}
+                <div class="post" data-token="{{message[0]}}">
+                    <img src="" alt="" class="avatar">
+                    <p class="username">{{message[1]}}</p>
+                    <p class="messcontent">{{message[3]}}</p>
+                    <p class="messtime">{{message[2]}}</p>
+                </div>
+                {% endfor%}
+            </div>
 
         </div>
 
         <div class="west-tendance">
-
+            <h2 class="tendance-title">Tendances</h2>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
+            <div class="tendance">
+                <p class="t-title">J’ai mangé un abricot</p>
+                <p class="rep">253 réponses</p>
+            </div>
         </div>
     </section>
 
