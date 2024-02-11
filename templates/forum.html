@@ -11,7 +11,7 @@
     <section class="main-part">
         <div class="est-setting">
             <div class="userProfile">
-                <img src="../static/img/near-tibet.png" alt="" class="useravatar">
+                <img src="{{session['user'][3]}}" alt="" class="useravatar">
                 <p class="username">{{session["user"][1]}}</p>
             </div>
             <div class="navigation-menu">
@@ -29,7 +29,7 @@
             
             <div class="user-interaction">
                 <div class="userprofil">
-                    <img src="" alt="" class="useravatar">
+                    <img src="{{session['user'][3]}}" alt="" class="useravatar">
                 </div>
                 <form action="{{url_for('send')}}" class="send-post">
                     <textarea id="post-input" name="messagecontent" placeholder="Quelque chose a nous dire ?" required maxlength="390" minlength="5" cols="30" rows="5"></textarea>
@@ -40,8 +40,10 @@
             <div class="messages-bloc">
                 {%for message in messages%}
                 <div class="post" data-token="{{message[0]}}">
-                    <img src="" alt="" class="avatar">
-                    <p class="username">{{message[1]}}</p>
+                    <div class="messprof">
+                        <img src="{{message[4]}}" alt="" class="useravatar plus">
+                        <p class="username">{{message[1]}}</p>
+                    </div>
                     <p class="messcontent">{{message[3]}}</p>
                     <p class="messtime">{{message[2]}}</p>
                 </div>

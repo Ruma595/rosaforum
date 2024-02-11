@@ -301,13 +301,13 @@ body {
     margin-right: auto;
     margin-top: 1%;
     font-family: "Montserrat";
-    border: cyan 2px solid;
+    /* border: cyan 2px solid; */
     display: flex;
     align-items: center;
 }
 
 .est-setting {
-    border: 2px black solid;
+    border-right: 1px rgba(0, 0, 0, 0.425) solid;
     width: 23%;
     height: 600px;
     display: flex;
@@ -327,6 +327,8 @@ body {
     width: 60px;
     height: 60px;
     margin: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 100%;
 }
 
 .username {
@@ -354,7 +356,7 @@ body {
 }
 
 .west-tendance {
-    border: 2px black solid;
+    border-left: 1px rgba(0, 0, 0, 0.425) solid;
     height: 600px;
     width: 27%;
     display: flex;
@@ -387,7 +389,7 @@ body {
     position: relative;
     width: 50%;
     height: 600px;
-    border: red 2px solid;
+    /* border: red 2px solid; */
 }
 
 .user-interaction {
@@ -431,4 +433,35 @@ body {
     right: 0;
     bottom: 0;
     margin: 10px;
+}
+
+.messages-bloc {
+    /* border:2px solid salmon; */
+    height: 76%;
+    overflow: auto;
+}
+
+.post {
+    border-top:1px rgba(0, 0, 0, 0.30) solid;
+}
+
+.messprof {
+    display: flex;
+    align-items: center;
+}
+
+.messcontent {
+    font-weight: 500;
+    margin-left: 13%;
+}
+.plus {
+    margin: 10px;
+}
+
+.messtime {
+    text-align: end;
+    font-weight: 500;
+    font-size: 0.9em;
+    margin: 5px;
+    color: #1d1d1d;
 }

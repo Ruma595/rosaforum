@@ -33,6 +33,7 @@ def home_page():
 def signin():
     username = request.form.get("username")
     password = request.form.get("password")
+    avatar = "https://api.dicebear.com/7.x/notionists-neutral/svg?seed="+username
     try:
         connect = sqlite3.connect("data.db")
         cursor = connect.cursor()
@@ -41,7 +42,7 @@ def signin():
             return render_template("index.html", signin=True, alreadyExist=True)
         else:
             token = secrets.token_hex(8)
-            req = cursor.execute("INSERT INTO users (token, name, password) VALUES (?,?,?)", (token, username, password))
+            req = cursor.execute("INSERT INTO users (token, name, password, avatar) VALUES (?,?,?,?)", (token, username, password, avatar))
             session["Token"] = token
         connect.commit()
         user = cursor.execute("SELECT * FROM users WHERE token = ?", (token, )).fetchone()
@@ -94,7 +95,7 @@ def send():
     try:
         connect = sqlite3.connect("data.db")
         cursor = connect.cursor()
-        req = cursor.execute("INSERT INTO messages (token, author, datetime, content) VALUES (?,?,?,?)", (token, author, time, content))
+        req = cursor.execute("INSERT INTO messages (token, author, datetime, content, useravatar) VALUES (?,?,?,?,?)", (token, author, time, content, session['user'][3]))
         connect.commit()
     except Exception as e:
         connect.rollback()
