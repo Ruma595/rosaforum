@@ -10,6 +10,7 @@ app.config["SECRET_KEY"] = "123456"
 @app.route("/", methods=["GET"])
 def home_page():
     req = request.args.get("stat")
+    post = request.args.get("post")
     if req == "login":
         return render_template("index.html", login=True)
     elif req == "signin":
@@ -18,13 +19,21 @@ def home_page():
         try:
             connect = sqlite3.connect("data.db")
             cursor = connect.cursor()
-            req = cursor.execute("SELECT * FROM messages")
-            messages_res = req.fetchall()
+            if post:
+                req = cursor.execute("SELECT * FROM messages WHERE token = ?", (post,))
+                messages_res = req.fetchone()
+                messages_response = cursor.execute("SELECT * FROM messages WHERE response = ?", (post, ))
+                res = messages_response.fetchall()
+                return render_template("forum.html",messages = messages_res, messages_resp = res, postit=True)
+            else:
+                req = cursor.execute("SELECT * FROM messages WHERE response IS NULL")
+                messages_res = req.fetchall()
         except Exception as e:
             connect.rollback()
             print(e)
         finally:
             connect.close()
+            
         return render_template("forum.html",messages = reversed(messages_res))
     else:
         return render_template("index.html", signin=False, login=False)
@@ -86,24 +95,32 @@ def clear():
     session.clear()
     return redirect("/")
 
-@app.route("/send")
+@app.route("/send", methods=["POST"])
 def send():
-    content = request.args.get("messagecontent")
+    content = request.form.get("messagecontent")
+    resp = request.form.get("resp")
     author = session["user"][1]
     time = "Le "+ datetime.datetime.now().strftime("%d %m %y")
     token = secrets.token_hex(6)
+    if resp:
+        data = (token, author, time, content, session['user'][3], resp)
+    else:
+        data = (token, author, time, content, session['user'][3], resp)
     try:
         connect = sqlite3.connect("data.db")
         cursor = connect.cursor()
-        req = cursor.execute("INSERT INTO messages (token, author, datetime, content, useravatar) VALUES (?,?,?,?,?)", (token, author, time, content, session['user'][3]))
+        req = cursor.execute("INSERT INTO messages (token, author, datetime, content, useravatar, response) VALUES (?,?,?,?,?,?)", data)
         connect.commit()
     except Exception as e:
         connect.rollback()
         print(e)
     finally:
         connect.close()
-        
-    return redirect(url_for("home_page"))
+    
+    if resp:
+        return redirect(url_for("home_page")+"?post="+resp)
+    else:
+        return redirect(url_for("home_page"))
 
 
 if __name__ == "__main__":

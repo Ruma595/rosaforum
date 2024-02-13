@@ -465,3 +465,8 @@ body {
     margin: 5px;
     color: #1d1d1d;
 }
+
+a {
+    color: black;
+    text-decoration: none;
+}

@@ -15,7 +15,7 @@
                 <p class="username">{{session["user"][1]}}</p>
             </div>
             <div class="navigation-menu">
-                <a href="" class="main-forum-page">Accueil</a>
+                <a href="{{url_for('home_page')}}" class="main-forum-page">Accueil</a>
                 <a href="" class="forum-navigation">Naviguez</a>
             
             </div>
@@ -26,34 +26,64 @@
         </div>
 
         <div class="middle-suggest">
-            
+            {%if postit==true%}
+            <div class="post" style="border-bottom:1px rgba(0, 0, 0, 0.30) solid;">
+                <div class="messprof">
+                    <img src="{{messages[4]}}" alt="" class="useravatar plus">
+                    <p class="username">{{messages[1]}}</p>
+                </div>
+                <p class="messcontent">{{messages[3]}}</p>
+                <p class="messtime">{{messages[2]}}</p>
+            </div>
+
+            {% endif %}
             <div class="user-interaction">
                 <div class="userprofil">
                     <img src="{{session['user'][3]}}" alt="" class="useravatar">
                 </div>
-                <form action="{{url_for('send')}}" class="send-post">
+                <form action="{{url_for('send')}}" method="post" class="send-post">
                     <textarea id="post-input" name="messagecontent" placeholder="Quelque chose a nous dire ?" required maxlength="390" minlength="5" cols="30" rows="5"></textarea>
+                    {% if postit %}
+                    <input type="hidden" name="resp" value="{{messages[0]}}">
+                    {% endif %}
                     <input type="submit" value="Post" id="postit">
                 </form>
             </div>
 
             <div class="messages-bloc">
-                {%for message in messages%}
-                <div class="post" data-token="{{message[0]}}">
-                    <div class="messprof">
-                        <img src="{{message[4]}}" alt="" class="useravatar plus">
-                        <p class="username">{{message[1]}}</p>
+                {% if not postit %}
+                {% for message in messages %}
+                <a href="?post={{message[0]}}">
+                    <div class="post">
+                        <div class="messprof">
+                            <img src="{{message[4]}}" alt="" class="useravatar plus">
+                            <p class="username">{{message[1]}}</p>
+                        </div>
+                        <p class="messcontent">{{message[3]}}</p>
+                        <p class="messtime">{{message[2]}}</p>
                     </div>
-                    <p class="messcontent">{{message[3]}}</p>
-                    <p class="messtime">{{message[2]}}</p>
-                </div>
-                {% endfor%}
+                </a>
+                {% endfor %}
+                
+                {%else%}
+                {% for message in messages_resp %}
+                <a href="?post={{message[0]}}">
+                    <div class="post">
+                        <div class="messprof">
+                            <img src="{{message[4]}}" alt="" class="useravatar plus">
+                            <p class="username">{{message[1]}}</p>
+                        </div>
+                        <p class="messcontent">{{message[3]}}</p>
+                        <p class="messtime">{{message[2]}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+                {% endif %}
             </div>
-
         </div>
 
         <div class="west-tendance">
-            <h2 class="tendance-title">Tendances</h2>
+            <h2 class="tendance-title">{{postit}}Tendances</h2>
             <div class="tendance">
                 <p class="t-title">J’ai mangé un abricot</p>
                 <p class="rep">253 réponses</p>
